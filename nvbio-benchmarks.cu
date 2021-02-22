@@ -167,9 +167,6 @@ void batch_alignment_test (const Sequences &sequences, const size_t batch_offset
     // copy the strings storage to the device
     nvbio::vector<device_tag, uint8> d_pattern( h_pattern );
     nvbio::vector<device_tag, uint8> d_text( h_text );
-    TIMER_STOP
-
-    *time += TIMER_MS;
 
     // allocate two vectors representing the string offsets
     nvbio::vector<device_tag, uint32> d_pattern_offsets( n_strings+1 );
@@ -183,7 +180,6 @@ void batch_alignment_test (const Sequences &sequences, const size_t batch_offset
     thrust::sequence( d_text_offsets.begin(), 
                       d_text_offsets.end(), 0u, text_len );
 
-    TIMER_START
     // prepare a vector of alignment sinks
     nvbio::vector<device_tag, aln::BestSink<uint32> > 
         sinks( n_strings );
